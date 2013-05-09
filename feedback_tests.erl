@@ -70,11 +70,11 @@ duplicate_colors_in_guess_but_not_secret_code_test() ->
       ?assertEqual(feedback:generate(["o", "o", "y", "y"], ["o", "r", "b", "r"]), ["b"])
     },
 
-    % { "returns one near match when the near match symbol is duplicated in the guess",
-    %   ?assertEqual(feedback:generate(["o", "o", "y", "y"], ["r", "r", "o", "r"]), ["w"])
-    % }
+    { "returns one near match when the near match symbol is duplicated in the guess",
+      ?assertEqual(feedback:generate(["o", "o", "y", "y"], ["r", "r", "o", "r"]), ["w"])
+    },
 
-    % { "returns one near match when the near match symbol is input 3 times in the guess",
-    %   ?assertEqual(feedback:generate(["o", "o", "o", "y"], ["r", "r", "r", "o"]), ["w"])
-    % }
+    { "returns one near match when the near match symbol is input 3 times in the guess",
+      ?assertEqual(feedback:generate(["o", "o", "o", "y"], ["r", "r", "r", "o"]), ["w"])
+    }
   ].

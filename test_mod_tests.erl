@@ -4,10 +4,14 @@
 test_mod_test() ->
   [
     { "returns ",
-      ?assertEqual(test_mod:generate(4), 16)
+      ?assertEqual(test_mod:generate(4), 17)
     },
 
     { "returns ",
-      ?assertEqual(1, 1)
+      ?assertEqual(test_mod:generate(2), 17)
+    },
+
+    { "returns ",
+      ?assertEqual(test_mod:iterate([1,2,3,4]), 10)
     }
   ].
