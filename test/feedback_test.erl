@@ -88,8 +88,3 @@ duplicate_colors_in_guess_but_not_secret_code_5_test() ->
   [{ "returns one exact match when the exact match symbol is input 1 time in the guess and duplicated twice in the secret code",
       ?assertEqual(feedback:get(["o", "o", "o", "y"], ["r", "r", "y", "y"]), [" ", " ", " ", "b"])
   }].
-
-
-
-
-
