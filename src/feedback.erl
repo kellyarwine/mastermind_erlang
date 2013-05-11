@@ -1,32 +1,31 @@
 -module(feedback).
--export([get/2]).
+-export([get/3, get/2]).
 
 get(Guess, Secret_Code) ->
-  exact_match(Guess, Secret_Code, [], [], []).
+  get(Guess, 1, Secret_Code).
 
-exact_match([Curr_Guess|Rem_Guess], [Curr_Secret_Code|Rem_Secret_Code], Feedback, Updated_Guess, Updated_Secret_Code)
-  when Curr_Guess == Curr_Secret_Code ->
-    exact_match(Rem_Guess, Rem_Secret_Code, Feedback ++ ["b"], Updated_Guess ++ ["z"], Updated_Secret_Code ++ ["x"]);
+get([Curr_Guess|Rem_Guess], Curr_Position, Secret_Code) ->
+  lists:sort(
+    match(Curr_Guess, Curr_Position, Secret_Code) ++ get(Rem_Guess, Curr_Position + 1, Secret_Code)
+            );
+get([], Curr_Position, Secret_Code) ->
+  [].
 
-exact_match([Curr_Guess|Rem_Guess], [Curr_Secret_Code|Rem_Secret_Code], Feedback, Updated_Guess, Updated_Secret_Code) ->
-  exact_match(Rem_Guess, Rem_Secret_Code, Feedback, Updated_Guess ++ [Curr_Guess], Updated_Secret_Code ++ [Curr_Secret_Code]);
+match(Curr_Guess, Curr_Position, Secret_Code) ->
 
-exact_match([], [], Feedback, Updated_Guess, Updated_Secret_Code) ->
-  near_match(Updated_Guess, Updated_Secret_Code, Updated_Secret_Code, Feedback, 1).
+  io:format("The current guess is: ~p ~n", [Curr_Guess]),
+  io:format("The secret code is: ~p ~n", [Secret_Code]),
 
+  Difference = [Curr_Guess] -- Secret_Code,
 
-near_match([Curr_Guess|Rem_Guess], [Curr_Secret_Code|_], Secret_Code, Feedback, Index)
-  when Curr_Guess == Curr_Secret_Code ->
-    Updated_Secret_Code = lists:sublist(Secret_Code, Index - 1) ++ ["x"] ++ lists:nthtail(Index, Secret_Code),
-    near_match(Rem_Guess, Updated_Secret_Code, Updated_Secret_Code, Feedback ++ ["w"], 1);
+  io:format("The difference is: ~p ~n", [Difference]),
 
-near_match([Curr_Guess|Rem_Guess], [Curr_Secret_Code|Rem_Secret_Code], Secret_Code, Feedback, Index)
-  when Curr_Guess =/= Curr_Secret_Code ->
-    Incremented_Index = Index + 1,
-    near_match([Curr_Guess|Rem_Guess], Rem_Secret_Code, Secret_Code, Feedback, Incremented_Index);
+  Curr_Secret_Code = lists:nth(Curr_Position, Secret_Code),
 
-near_match([_|Rem_Guess], [], Secret_Code, Feedback, _) ->
-  near_match(Rem_Guess, Secret_Code, Secret_Code, Feedback, 1);
+  io:format("The current secret code is: ~p ~n", [Curr_Secret_Code]),
 
-near_match([], _, _, Feedback, _) ->
-  Feedback.
+  if
+    Curr_Guess == Curr_Secret_Code -> ["b"];
+    Difference == []               -> ["w"];
+    true                           -> [" "]
+  end.

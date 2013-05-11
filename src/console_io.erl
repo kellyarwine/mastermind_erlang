@@ -1,5 +1,5 @@
 -module(console_io).
--export([display_welcome_message/0, display_gameboard/0]).
+-export([get_move/0, display_welcome_message/0, display_gameboard/1, turn_data/1, format_turn/1]).
 
 display(Message) ->
   io:format(Message).
@@ -16,15 +16,16 @@ get_move() ->
 display_welcome_message() ->
   display("Welcome to Mastermind!  Get ready to play!~n").
 
-display_gameboard() ->
+display_gameboard(Turns) ->
   display(
   board_header() ++
   board_headings() ++
+  turn_data(Turns) ++
   board_footer()
           ).
 
 board_header() ->
-"
+  "
  -----------------------------------------------------------------------
 |                                            .                          |
 |                                           .o8                         |
@@ -46,11 +47,20 @@ board_header() ->
 ".
 
 board_headings() ->
-"|                TURN               |             FEEDBACK              |
+  "|                TURN               |             FEEDBACK              |
 |                                   |                                   |
  -----------------------------------------------------------------------
 |                                   |                                   |
 ".
+
+turn_data([Curr_Turn|Rem_Turns]) ->
+  format_turn(Curr_Turn) ++ "\n" ++ turn_data(Rem_Turns);
+turn_data([]) ->
+  [].
+
+format_turn({Guess, Feedback}) ->
+  Buffer = string:copies(" ", space_per_character() - 1),
+  left_edge_border() ++ Buffer ++ string:join(Guess, Buffer) ++ Buffer ++ " " ++ left_edge_border() ++ Buffer ++ string:join(Feedback, Buffer) ++ Buffer ++ " " ++ left_edge_border().
 
 % board_row(move_history)
 %   string = ""
@@ -83,6 +93,9 @@ board_headings() ->
 % def border
 %   ("%0" + (space_per_character + 1).to_s + "s") % "|"
 % end
+
+space_per_character() ->
+  7.
 
 left_edge_border() ->
   "|".
