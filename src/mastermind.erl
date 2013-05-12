@@ -1,33 +1,42 @@
 -module(mastermind).
--export([start_game/0, run_game/2]).
--define(TOTAL_MOVES, 12).
+-export([start/0, run/3, game_decision/1, game_decision/2]).
+-define(TOTAL_MOVES, 4).
 
-start_game() ->
+-include("secret_code.hrl").
+
+
+
+start() ->
   Secret_Code = secret_code:get(),
   console_io:display_welcome_message(),
-  % set_moves_remaining(),
-  run_game(Secret_Code, []).
+  run(Secret_Code, [], play).
 
-run_game(Secret_Code, Turns) ->
-  % Game_Status
-  % if game_over() =/= true ->
-  % console_io:display_gameboard(Turns),
-  Guess = console_io:get_guess(),
+
+
+run(Secret_Code, Turns, play) ->
+  console_io:display_gameboard(Turns),
+  Guess = prompter:guess(?SYMBOLS),
   Feedback = feedback:get(Secret_Code, Guess),
+  Updated_Turns = Turns ++ [{Guess, Feedback}],
+  run(Secret_Code, Updated_Turns, game_decision(Updated_Turns));
 
-  io:format("The secret code is: ~p ~n", [Secret_Code]),
-  io:format("The guess is: ~p ~n", [Guess]),
-  io:format("The feedback is: ~p ~n", [Feedback]).
+run(Secret_Code, Turns, Game_Result) ->
+  console_io:display_game_decision(Game_Result, Secret_Code).
 
-%   run_game(Secret_Code, Turns ++ [{Guess, Feedback}]);
-% run_game(Secret_Code, Turns) ->
-%   io:format("You win!").
 
-%   display_gameboard
-%   game_win? ? display_win_message : display_lose_message.
 
-% game_over() ->
-%   true.
+game_decision(Turns) ->
+  Game_Result = lists:filter(fun({X, Y}) -> Y == ["b","b","b","b"] end, Turns),
+  Turn_Count = length(Turns),
+  game_decision(Game_Result, Turn_Count).
 
-% set_moves_remaining() ->
-%   ?TOTAL_MOVES.
+
+
+game_decision([{_, ["b","b","b","b"]}], _) ->
+  win;
+
+game_decision(_, ?TOTAL_MOVES) ->
+  lose;
+
+game_decision(_, _) ->
+  play.

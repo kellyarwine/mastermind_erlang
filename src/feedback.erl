@@ -7,7 +7,6 @@ get(Guess, Secret_Code) ->
 get(Curr_Position, Guess, Secret_Code, Feedback) when Curr_Position < length(Guess) ->
   New_Curr_Position = Curr_Position + 1,
   Curr_Guess = lists:nth(New_Curr_Position, Guess),
-  Rem_Guess = lists:nthtail(New_Curr_Position, Guess),
   match(Curr_Guess, New_Curr_Position, Guess, Secret_Code, Feedback);
 
 get(_, _, _, Feedback) ->

@@ -1,28 +1,59 @@
 -module(console_io).
--export([get_move/0, display_welcome_message/0, display_gameboard/1, turn_data/1, format_turn/1]).
+-export([gets/1, display/2, display_welcome_message/0, display_invalid_selection/0, display_game_decision/2, display_gameboard/1, turn_data/1]).
+-define(SPACES_PER_CHARACTER, 6).
+-define(LEFT_EDGE_BORDER, "|").
+-define(WELCOME_MESSAGE, "~nWelcome to Mastermind!  Get ready to play!~n").
+-define(INVALID_SELECTION_MESSAGE, "\nYour input was invalid.  Please try again.\n\n").
+-define(PLAY_AGAIN_MESSAGE, "Would you like to play again? (y/n)\n").
+-define(WIN_MESSAGE, "Woohoo!  You win!\n").
+-define(LOSE_MESSAGE, "\nThe secret code is: ~p \nYou are a loser.  Go home.\n").
 
-display(Message) ->
-  io:format(Message).
+
+
+display(Message, Args) ->
+  io:format(Message, Args).
+
+
 
 gets(Message) ->
-  {ok, [X]} = io:fread(Message, "~s"),
-  io:format("~s~n", [X]),
-  X.
+  {_, [Input]} = io:fread(Message, "~s"),
+  Input.
 
-get_move() ->
-  Move = gets("Please enter your guess: "),
-  re:split(Move, "", [{return,list}, trim]).
+
 
 display_welcome_message() ->
-  display("Welcome to Mastermind!  Get ready to play!~n").
+  display(?WELCOME_MESSAGE, []).
+
+
+
+display_invalid_selection() ->
+  display(?INVALID_SELECTION_MESSAGE, []).
+
+
+
+display_play_again() ->
+  display(?PLAY_AGAIN_MESSAGE, []).
+
+
+
+display_game_decision(win, _) ->
+  display(?WIN_MESSAGE, []);
+
+display_game_decision(lose, Secret_Code) ->
+  display(?LOSE_MESSAGE, [Secret_Code]).
+
+
 
 display_gameboard(Turns) ->
   display(
   board_header() ++
   board_headings() ++
   turn_data(Turns) ++
-  board_footer()
-          ).
+  board_footer(),
+  []
+        ).
+
+
 
 board_header() ->
   "
@@ -46,6 +77,8 @@ board_header() ->
 |                                   |                                   |
 ".
 
+
+
 board_headings() ->
   "|                TURN               |             FEEDBACK              |
 |                                   |                                   |
@@ -53,52 +86,20 @@ board_headings() ->
 |                                   |                                   |
 ".
 
+
+
 turn_data([Curr_Turn|Rem_Turns]) ->
   format_turn(Curr_Turn) ++ "\n" ++ turn_data(Rem_Turns);
 turn_data([]) ->
   [].
 
+
+
 format_turn({Guess, Feedback}) ->
-  Buffer = string:copies(" ", space_per_character() - 1),
-  left_edge_border() ++ Buffer ++ string:join(Guess, Buffer) ++ Buffer ++ " " ++ left_edge_border() ++ Buffer ++ string:join(Feedback, Buffer) ++ Buffer ++ " " ++ left_edge_border().
+  Buffer = string:copies(" ", ?SPACES_PER_CHARACTER),
+  ?LEFT_EDGE_BORDER ++ Buffer ++ string:join(Guess, Buffer) ++ Buffer ++ " " ++ ?LEFT_EDGE_BORDER ++ Buffer ++ string:join(Feedback, Buffer) ++ Buffer ++ " " ++ ?LEFT_EDGE_BORDER.
 
-% board_row(move_history)
-%   string = ""
-%   move_history.each do |move|
-%     string << left_edge_border + parse_move(move) + border + "\n"
-%   end
-%   string
-% end
 
-% def parse_move(move)
-%   string = ""
-%   string << parse_move_part(move.first)
-%   string << border
-%   string << parse_move_part(move.last)
-%   string
-% end
-
-% def parse_move_part(part)
-%   string = ""
-
-%   part.each { |char| string << ("%0" + space_per_character.to_s + "s") % char }
-
-%   string
-% end
-
-% def space_per_character
-%   7
-% end
-
-% def border
-%   ("%0" + (space_per_character + 1).to_s + "s") % "|"
-% end
-
-space_per_character() ->
-  7.
-
-left_edge_border() ->
-  "|".
 
 board_footer() ->
   "|                                   |                                   |

@@ -1,0 +1,1 @@
+-define(SYMBOLS, ["b","g","p","r","y","o"]).
