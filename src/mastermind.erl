@@ -17,7 +17,7 @@ run(Secret_Code, Turns, play) ->
   console_io:display_gameboard(Turns),
   Rem_Moves = ?TOTAL_MOVES - length(Turns),
   Avail_Sym = lists:sublist(?SYMBOLS, ?SECRET_CODE_AVAILABLE_SYMBOLS),
-  Guess = prompter:guess(Rem_Moves, Avail_Sym),
+  Guess = prompter:guess(),
   Feedback = feedback:get(Secret_Code, Guess),
   Updated_Turns = Turns ++ [{Guess, Feedback}],
   run(Secret_Code, Updated_Turns, game_decision(Updated_Turns));

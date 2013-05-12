@@ -1,16 +1,19 @@
--module(prompter_test).
--include_lib("eunit/include/eunit.hrl").
+        -module(prompter_test).
+        -include_lib("eunit/include/eunit.hrl").
 
+        % guess_1_test() ->
+        %   meck:new(prompter),
+        %   io:format(prompter),
+        %   meck:expect(prompter, gets, fun() -> "aaaa" end),
+        %   ?assertEqual(prompter:guess(), ["a","a","a","a"]),
+        %   ?assert(meck:validate(prompter)).
 
-
-
-guess_1_test() ->
-  meck:new(prompter),
-  meck:expect(prompter, prompt, fun("Please enter a guess: ", [12, ["a","b","c","d","e","f"]]) -> "aaaa" end),
-  ?assertEqual(prompter:guess(12, ["a","b","c","d","e","f"]), ["a","a","a","a"]),
-  ?assert(meck:validate(prompter)),
-  meck:unload(prompter).
-
+        guess_2_test() ->
+          meck:new(prompter),
+          meck:expect(prompter, run, fun(8) -> 21 end),
+          ?assertEqual(prompter:next_run(), 21),
+          ?assert(meck:validate(prompter)),
+          meck:unload(prompter).
 
 
 
