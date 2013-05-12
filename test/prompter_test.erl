@@ -4,12 +4,21 @@
 
 
 
-% guess_1_test() ->
-%   [{ "returns a valid guess",
-%       meck:new(prompter),
-%       meck:expect(prompter, prompt, fun() -> "aaaa" end),
-%       ?assertEqual(prompter:prompt,"aaaa")
-%   }].
+guess_1_test() ->
+  meck:new(prompter),
+  meck:expect(prompter, prompt, fun("Please enter a guess: ", [12, ["a","b","c","d","e","f"]]) -> "aaaa" end),
+  ?assertEqual(prompter:guess(12, ["a","b","c","d","e","f"]), ["a","a","a","a"]),
+  ?assert(meck:validate(prompter)),
+  meck:unload(prompter).
+
+
+
+
+  % [{ "returns a valid guess",
+  %     meck:new(prompter),
+  %     meck:expect(prompter, prompt, fun() -> "aaaa" end),
+  %     ?assertEqual(prompter:prompt,"aaaa")
+  % }].
 
 % validate_guess_1_test() ->
 %   [{ "returns false when the guess is invalid",

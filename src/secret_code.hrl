@@ -1,1 +1,3 @@
--define(SYMBOLS, ["b","g","p","r","y","o"]).
+-define(SYMBOLS, ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"]).
+-define(SECRET_CODE_LENGTH, 4).
+-define(SECRET_CODE_AVAILABLE_SYMBOLS, 6).

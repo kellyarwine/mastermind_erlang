@@ -5,4 +5,4 @@
 
 get() ->
   random:seed(now()),
-  [lists:nth(random:uniform(6), ?SYMBOLS) || _ <- lists:seq(1, 4)].
+  [lists:nth(random:uniform(?SECRET_CODE_AVAILABLE_SYMBOLS), ?SYMBOLS) || _ <- lists:seq(1, ?SECRET_CODE_LENGTH)].

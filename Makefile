@@ -1,4 +1,4 @@
-all:	compile run_test run_game
+all:	compile run_test
 
 compile:
 	erlc -o ebin/ src/*.erl
@@ -10,10 +10,10 @@ run_test:
 	-eval 'eunit:test("ebin").' \
 	-s init stop
 
-run_game:
+play_game:
 	erl -noshell -pa ebin \
 	-env ERL_LIBS deps/ \
-	-eval "mastermind:start()." \
+	-eval "game_runner:call()." \
 	-s init stop
 
 clean:

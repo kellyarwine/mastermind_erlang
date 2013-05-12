@@ -1,12 +1,11 @@
 -module(console_io).
--export([gets/1, display/2, display_welcome_message/0, display_invalid_selection/0, display_game_decision/2, display_gameboard/1, turn_data/1]).
+-export([gets/2, display/2, display_welcome_message/0, display_invalid_selection/0, display_game_decision/2, display_gameboard/1, turn_data/1]).
 -define(SPACES_PER_CHARACTER, 6).
 -define(LEFT_EDGE_BORDER, "|").
 -define(WELCOME_MESSAGE, "~nWelcome to Mastermind!  Get ready to play!~n").
 -define(INVALID_SELECTION_MESSAGE, "\nYour input was invalid.  Please try again.\n\n").
--define(PLAY_AGAIN_MESSAGE, "Would you like to play again? (y/n)\n").
 -define(WIN_MESSAGE, "Woohoo!  You win!\n").
--define(LOSE_MESSAGE, "\nThe secret code is: ~p \nYou are a loser.  Go home.\n").
+-define(LOSE_MESSAGE, "\nThe secret code was: ~p .\nLoser!\n").
 
 
 
@@ -15,8 +14,9 @@ display(Message, Args) ->
 
 
 
-gets(Message) ->
-  {_, [Input]} = io:fread(Message, "~s"),
+gets(Message, Args) ->
+  Prompt = display(Message, Args),
+  {_, [Input]} = io:fread(Prompt, "~s"),
   Input.
 
 
@@ -28,11 +28,6 @@ display_welcome_message() ->
 
 display_invalid_selection() ->
   display(?INVALID_SELECTION_MESSAGE, []).
-
-
-
-display_play_again() ->
-  display(?PLAY_AGAIN_MESSAGE, []).
 
 
 

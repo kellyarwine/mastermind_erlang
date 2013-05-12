@@ -1,6 +1,6 @@
 -module(mastermind).
 -export([start/0, run/3, game_decision/1, game_decision/2]).
--define(TOTAL_MOVES, 4).
+-define(TOTAL_MOVES, 12).
 
 -include("secret_code.hrl").
 
@@ -15,7 +15,9 @@ start() ->
 
 run(Secret_Code, Turns, play) ->
   console_io:display_gameboard(Turns),
-  Guess = prompter:guess(?SYMBOLS),
+  Rem_Moves = ?TOTAL_MOVES - length(Turns),
+  Avail_Sym = lists:sublist(?SYMBOLS, ?SECRET_CODE_AVAILABLE_SYMBOLS),
+  Guess = prompter:guess(Rem_Moves, Avail_Sym),
   Feedback = feedback:get(Secret_Code, Guess),
   Updated_Turns = Turns ++ [{Guess, Feedback}],
   run(Secret_Code, Updated_Turns, game_decision(Updated_Turns));
