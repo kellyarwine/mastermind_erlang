@@ -5,7 +5,7 @@
           meck:new(prompter, [passthrough]),
           meck:expect(prompter, gets, fun() -> "aaaa" end),
           % meck:expect(prompter, gets, fun() -> meck:passthrough(["aaaa"]) end),
-          ?assertEqual(prompter:gets(), "aaaa"),
+          ?assertEqual(prompter:guess(), "aaaa"),
           ?assert(meck:validate(prompter)),
           meck:unload(prompter).
 
