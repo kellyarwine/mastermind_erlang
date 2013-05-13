@@ -1,6 +1,12 @@
 -module(mastermind_test).
 -include_lib("eunit/include/eunit.hrl").
 
+guess_1_with_one_valid_guess_test() ->
+          meck:new(gets),
+          meck:expect(gets, response, fun() -> "aaaa" end),
+          ?assertEqual(prompter:guess(12, ["a","b","c","d","e","f"]), ["a","a","a","a"]),
+          meck:unload(gets).
+
 % start_1_test() ->
 %   [{ "generates a secret code, displays a welcome message and runs the game",
 %       ?assertEqual(mastermind:start(), secret_code:get()),

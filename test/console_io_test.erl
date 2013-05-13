@@ -6,11 +6,6 @@ display_1_test() ->
       ?assertEqual(console_io:display("hi ~s", ["aaa"]), ok)
   }].
 
-% gets_1_test() ->
-%   [{ "receives input from the Console",
-%       ?assertEqual(console_io:display("Enter your guess: ", []), ok)
-%   }].
-
 display_welcome_message_test() ->
   [{ "writes welcome message to the Console",
       ?assertEqual(console_io:display_welcome_message(), ok)
