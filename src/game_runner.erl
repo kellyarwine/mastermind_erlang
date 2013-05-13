@@ -1,12 +1,11 @@
 -module(game_runner).
--export([call/0]).
+-export([call/0, play_again/1, play_again/0]).
 
 
 
 call() ->
   mastermind:start(),
   play_again().
-
 
 
 

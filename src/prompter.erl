@@ -1,20 +1,13 @@
 -module(prompter).
--export([prompt/2, guess/2, validate_guess/3, play_again/0]).
--define(GUESS_PROMPT_MESSAGE, "You have ~d moves remaining.\nPlease enter your guess from the following options: ~p\n(example: abcd)\n\n").
+-export([guess/2, validate_guess/3, play_again/0, validate_play_again/1]).
+-define(GUESS_PROMPT_MESSAGE, "You have ~p moves remaining.~nPlease enter your guess from the following options: ~n~p~n(example: abcd)~n~n").
 -define(PLAY_AGAIN_PROMPT_MESSAGE, "\nWould you like to play again? (y/n)\n").
 -define(PLAY_AGAIN_RESPONSES, ["y", "n"]).
 
 
 
-prompt(Message, Args) ->
-  console_io:gets(Message, Args).
-
-
-
-
-
 guess(Rem_Moves, Avail_Sym) ->
-  Guess = prompt(?GUESS_PROMPT_MESSAGE, [Rem_Moves, Avail_Sym]),
+  Guess = console_io:gets(?GUESS_PROMPT_MESSAGE, [Rem_Moves, Avail_Sym]),
   Guess_List = convert_guess_to_list(Guess),
   validate_guess(Guess_List, Rem_Moves, Avail_Sym).
 
@@ -41,7 +34,7 @@ validate_guess(_, Avail_Sym, Rem_Moves, _, _) ->
 
 
 play_again() ->
-  Play_Again = prompt(?PLAY_AGAIN_PROMPT_MESSAGE, []),
+  Play_Again = console_io:gets(?PLAY_AGAIN_PROMPT_MESSAGE, []),
   validate_play_again(Play_Again).
 
 

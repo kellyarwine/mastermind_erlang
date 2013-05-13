@@ -1,43 +1,43 @@
 -module(console_io_test).
 -include_lib("eunit/include/eunit.hrl").
 
-% get_guess_test() ->
-%   [{ "",
-%       ?assertEqual(1,1)
+display_1_test() ->
+  [{ "writes a message to the Console",
+      ?assertEqual(console_io:display("hi ~s", ["aaa"]), ok)
+  }].
+
+% gets_1_test() ->
+%   [{ "receives input from the Console",
+%       ?assertEqual(console_io:display("Enter your guess: ", []), ok)
 %   }].
 
-display_1_test() ->
-  [{ "writes a message to Console",
-      ?assertEqual(console_io:display("hi ~s", ["aaa"]), ok)
-  }].
-
-gets_1_test() ->
-  [{ "writes a message to Console",
-      ?assertEqual(console_io:display("hi ~s", ["aaa"]), ok)
-  }].
-
 display_welcome_message_test() ->
-  [{ "writes welcome message to Console",
+  [{ "writes welcome message to the Console",
       ?assertEqual(console_io:display_welcome_message(), ok)
   }].
 
+display_invalid_selection_test() ->
+  [{ "writes the invalid selection message to the Console",
+      ?assertEqual(console_io:display_invalid_selection(), ok)
+  }].
+
 display_game_decision_1_test() ->
-  [{ "writes win message to Console",
+  [{ "writes the win message to the Console",
       ?assertEqual(console_io:display_game_decision(win, ["b","b","b","b"]), ok)
   }].
 
 display_game_decision_2_test() ->
-  [{ "writes lose message to Console",
+  [{ "writes the lose message to the Console",
       ?assertEqual(console_io:display_game_decision(lose, ["a","a","a","a"]), ok)
   }].
 
 display_gameboard_test() ->
-  [{ "writes gameboard to Console",
+  [{ "writes the gameboard to the Console",
       ?assertEqual(console_io:display_gameboard([{["a","a","a","a"],["b","b","b","b"]}]), ok)
   }].
 
 turn_data_1_test() ->
-  [{ "returns no rows of data when no turn data exists",
+  [{ "returns no rows of data when no turns have been taken",
       ?assertEqual(console_io:turn_data([]), "")
   }].
 

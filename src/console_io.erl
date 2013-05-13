@@ -15,8 +15,8 @@ display(Message, Args) ->
 
 
 gets(Message, Args) ->
-  Prompt = display(Message, Args),
-  {_, [Input]} = io:fread(Prompt, "~s"),
+  display(Message, Args),
+  {_, [Input]} = io:fread("", "~s"),
   Input.
 
 
