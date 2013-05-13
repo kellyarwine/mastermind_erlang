@@ -7,7 +7,8 @@
 
 
 guess(Rem_Moves, Avail_Sym) ->
-  Guess = console_io:gets(?GUESS_PROMPT_MESSAGE, [Rem_Moves, Avail_Sym]),
+  console_io:display(?GUESS_PROMPT_MESSAGE, [Rem_Moves, Avail_Sym]),
+  Guess = gets:response(),
   Guess_List = convert_guess_to_list(Guess),
   validate_guess(Guess_List, Rem_Moves, Avail_Sym).
 
@@ -34,7 +35,8 @@ validate_guess(_, Avail_Sym, Rem_Moves, _, _) ->
 
 
 play_again() ->
-  Play_Again = console_io:gets(?PLAY_AGAIN_PROMPT_MESSAGE, []),
+  console_io:display(?PLAY_AGAIN_PROMPT_MESSAGE, []),
+  Play_Again = gets:response(),
   validate_play_again(Play_Again).
 
 

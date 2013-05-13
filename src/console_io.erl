@@ -14,13 +14,6 @@ display(Message, Args) ->
 
 
 
-gets(Message, Args) ->
-  display(Message, Args),
-  {_, [Input]} = io:fread("", "~s"),
-  Input.
-
-
-
 display_welcome_message() ->
   display(?WELCOME_MESSAGE, []).
 
