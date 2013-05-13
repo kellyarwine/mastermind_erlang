@@ -1,6 +1,14 @@
 -module(prompter_test).
 -include_lib("eunit/include/eunit.hrl").
 
+guess_1_test() ->
+          meck:new(gets),
+          meck:expect(gets, response, fun() -> "aaaa" end),
+          ?assertEqual(prompter:guess(12, ["a","b","c","d","e","f"]), ["a","a","a","a"]),
+          ?assert(meck:validate(gets)),
+          meck:unload(gets).
+
+
 % guess_1_test() ->
 %   [{ "displays an invalid selection message, prompts the player for a guess, returns the guess in a list datatype and validates the guess",
 %       ?assertEqual(prompter:guess("aaaa", 12, ["a","b","c","d","e","f"]), console_io:display_invalid_selection())
