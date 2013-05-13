@@ -12,7 +12,6 @@ get() ->
 
 
 random_generator(I, Limit, Secret_Codes) when I =< Limit ->
-  io:format(Secret_Codes),
   Updated_Secret_Codes = Secret_Codes ++ [secret_code:get()],
   random_generator(I + 1, Limit, Updated_Secret_Codes);
 
