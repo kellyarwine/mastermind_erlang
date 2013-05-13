@@ -11,7 +11,7 @@ run_test:
 	-s init stop
 
 play_game:
-	erl -noshell -pa ebin \
+	erl -pa ebin \
 	-env ERL_LIBS deps/ \
 	-eval "game_runner:call()." \
 	-s init stop

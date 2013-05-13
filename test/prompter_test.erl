@@ -20,15 +20,15 @@ guess_1_test() ->
   %     ?assertEqual(prompter:prompt,"aaaa")
   % }].
 
-% validate_guess_1_test() ->
-%   [{ "returns false when the guess is invalid",
-%       ?assertEqual(prompter:validate_guess(["g","g","g"], ["b","g","p","r","y","o"]), false)
-%   }].
+validate_guess_1_test() ->
+  [{ "returns false when the guess is invalid",
+      ?assertEqual(prompter:validate_guess(["g","g","g"], ["b","g","p","r","y","o"]), false)
+  }].
 
-% validate_guess_2_test() ->
-%   [{ "returns false when the guess is invalid",
-%       ?assertEqual(prompter:validate_guess(["."], ["b","g","p","r","y","o"]), false)
-%   }].
+validate_guess_2_test() ->
+  [{ "returns false when the guess is invalid",
+      ?assertEqual(prompter:validate_guess(["."], ["b","g","p","r","y","o"]), false)
+  }].
 
 % validate_guess_3_test() ->
 %   [{ "returns false when the guess is invalid",

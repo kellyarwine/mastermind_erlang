@@ -6,7 +6,15 @@
 %       ?assertEqual(1,1)
 %   }].
 
+display_1_test() ->
+  [{ "writes a message to Console",
+      ?assertEqual(console_io:display("hi ~s", ["aaa"]), ok)
+  }].
 
+gets_1_test() ->
+  [{ "writes a message to Console",
+      ?assertEqual(console_io:display("hi ~s", ["aaa"]), ok)
+  }].
 
 display_welcome_message_test() ->
   [{ "writes welcome message to Console",
