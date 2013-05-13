@@ -1,20 +1,14 @@
 -module(prompter).
--export([prompt/1, guess/0, next_run/0]).
+-export([prompt/1, guess/1]).
 
 prompt(Message) ->
-  console_io:gets(Message).
-
-run(8) ->
-  21.
-
-next_run() ->
-  run(8).
+  io:format(Message).
 
 gets() ->
   {_, [Input]} = io:fread("Enter:  ", "~s"),
   Input.
 
-guess() ->
+guess(input) ->
   Guess_Input = gets(),
   Guess_List = convert_guess_to_list(Guess_Input).
 
