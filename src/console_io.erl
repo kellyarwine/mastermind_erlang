@@ -1,5 +1,5 @@
 -module(console_io).
--export([display/2, display_welcome_message/0, display_invalid_selection/0, display_game_decision/2, display_gameboard/1, turn_data/1]).
+-export([display/2, get_guess/0, get_play_again/0, display_welcome_message/0, display_invalid_selection/0, display_game_decision/2, display_gameboard/1, turn_data/1]).
 -define(SPACES_PER_CHARACTER, 6).
 -define(LEFT_EDGE_BORDER, "|").
 -define(WELCOME_MESSAGE, "~nWelcome to Mastermind!  Get ready to play!~n").
@@ -11,6 +11,22 @@
 
 display(Message, Args) ->
   io:format(Message, Args).
+
+
+
+gets() ->
+  {_, [Input]} = io:fread("", "~s"),
+  Input.
+
+
+
+get_guess() ->
+  gets().
+
+
+
+get_play_again() ->
+  gets().
 
 
 

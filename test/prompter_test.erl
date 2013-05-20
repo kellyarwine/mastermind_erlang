@@ -60,6 +60,17 @@ guess_suite_test() ->
     }
   }.
 
+guess_1() ->
+  guess(mock_io, 1, ["a","b","c","d","e","f"]),
+
+call_test() ->
+  meck:new(secret_code),
+  meck:expect(secret_code, get, fun() -> ["a","a","a","a"] end),
+  ?assertEqual(mastermind:start(mock_io), win),
+  meck:unload(secret_code).
+
+
+
 % guess_1_test() ->
 %   [{ "displays an invalid selection message when guess is invalid",
 %       ?assertEqual(1,1)

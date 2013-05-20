@@ -1,7 +1,4 @@
 -module(gets).
--export([response/0]).
+-export([]).
 
 
-response() ->
-  {_, [Input]} = io:fread("", "~s"),
-  Input.

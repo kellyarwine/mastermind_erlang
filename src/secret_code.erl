@@ -1,5 +1,5 @@
 -module(secret_code).
--export([get/0, random_generator/3]).
+-export([get/0]).
 
 -include("secret_code.hrl").
 
@@ -11,9 +11,3 @@ get() ->
 
 
 
-random_generator(I, Limit, Secret_Codes) when I =< Limit ->
-  Updated_Secret_Codes = Secret_Codes ++ [secret_code:get()],
-  random_generator(I + 1, Limit, Updated_Secret_Codes);
-
-random_generator(_, Limit, Secret_Codes) ->
-  Secret_Code_Duplicates = Limit - length(lists:usort(Secret_Codes)).

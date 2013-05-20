@@ -1,22 +1,22 @@
 -module(game_runner).
--export([call/0, play_again/1, play_again/0]).
+-export([call/1, play_again/2, play_again/1]).
 
 
 
-call() ->
-  mastermind:start(),
-  play_again().
+call(IOModule) ->
+  mastermind:start(IOModule),
+  play_again(IOModule).
 
 
 
-play_again() ->
-  Result = prompter:play_again(),
-  play_again(Result).
+play_again(IOModule) ->
+  Result = prompter:play_again(IOModule),
+  play_again(IOModule, Result).
 
 
 
-play_again("y") ->
-  call();
+play_again(IOModule, "y") ->
+  call(IOModule);
 
-play_again("n") ->
+play_again(_, "n") ->
   ok.
